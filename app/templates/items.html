@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block body %}
+    <a href="/">Домой</a>
+    <p>Выводить по</p>
+    <ul>
+        {% for page_size in PAGE_SIZES %}
+            <li>
+                <a href="{{ generate_url(1, page_size, query['intitle'], query['sort'], query['order'])}}">{{ page_size }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <table border="1px solid" align="center">
+        <thead>
+            <tr>
+                <td colspan="2">
+                    <p>
+                        {% if query['page'] > 1 %}
+                            <a href="{{ generate_url(query['page'] - 1, query['pagesize'], query['intitle'], query['sort'], query['order'] )}}">
+                                < сюдой
+                            </a>
+                        {% endif %}
+                        <a href="{{ generate_url(query['page'] + 1, query['pagesize'], query['intitle'], query['sort'], query['order'] )}}">
+                            тудой >
+                        </a>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Дата запроса</td>
+                <td>Заголовок</td>
+                <td>
+                    <a href="{{ generate_url(1, query['pagesize'], query['intitle'], 'votes', 'asc' if query['order'] == 'desc' else 'desc' )}}">
+                        Оценка
+                        {% if  query['sort'] == 'votes' %}
+                            {{ '🡇' if query['order'] == 'desc' else '🡅' }}
+                        {% endif %}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ generate_url(1, query['pagesize'], query['intitle'], 'activity', 'asc' if query['order'] == 'desc' else 'desc')}}">
+                        Последняя активность
+                        {% if  query['sort'] == 'activity' %}
+                            {{ '🡇' if query['order'] == 'desc' else '🡅' }}
+                        {% endif %}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ generate_url(1, query['pagesize'], query['intitle'], 'creation', 'asc' if query['order'] == 'desc' else 'desc')}}">
+                        Дата создания
+                        {% if  query['sort'] == 'creation' %}
+                            {{ '🡇' if query['order'] == 'desc' else '🡅' }}
+                        {% endif %}
+                    </a>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>{{ loop.index + query['pagesize'] * query['page'] - query['pagesize'] }}</td>
+                    <td>{{ item['creation_at'] }}</td>
+                    <td>{{ item['title'] }}</td>
+                    <td>{{ item['score'] }}</td>
+                    <td>{{ item['last_activity_date'] }}</td>
+                    <td>{{ item['creation_date'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <ul>
+    </ul>
+{% endblock %}

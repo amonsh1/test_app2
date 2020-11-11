@@ -1,0 +1,14 @@
+cd test_app
+
+переименовать example.env в .env и заполнить
+
+pip3 install -r requirenments.txt
+
+alembic -c app/db/alembic.ini upgrade head
+
+запуск через установку
+pip3 install .
+my_super_app
+
+через supervisor
+supervisord -c supervisor.conf

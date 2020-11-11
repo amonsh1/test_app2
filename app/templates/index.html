@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+    <form action="/" method="get">
+        <input name="intitle">
+        <input type="submit">
+    </form>
+    <table>
+        <tbody>
+            {% for item in search_types %}
+                <tr>
+                    <td><a href="{{ generate_url(1, PAGE_SIZES[0], item['intitle'], 'activity', 'desc')}}">{{ item['intitle'] }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

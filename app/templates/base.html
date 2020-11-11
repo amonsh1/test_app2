@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #ws_messages{
+        position: absolute;
+        top: 50px;
+        right: 50px;
+    }
+</style>
+<div id="ws_messages"></div>
+<body>
+    {% block body %}
+    {% endblock %}
+</body>
+</html>
+<script>
+
+let socket = new WebSocket("ws://{{ HOST }}:{{ PORT }}/notification");
+
+socket.onmessage = function(event) {
+    var s = document.getElementById("ws_messages");
+    var b = document.createElement('p');
+    b.textContent = event.data;
+    s.appendChild(b);
+    setTimeout(() => {
+        b.remove();
+    }, 2000);
+};
+
+socket.onclose = function(event) {
+  console.log(event.data);
+};
+
+socket.onerror = function(error) {
+  console.log(error.message);
+};
+
+</script>

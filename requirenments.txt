@@ -1,0 +1,14 @@
+alembic
+aiohttp
+aiopg
+aioredis
+jinja2
+aiohttp_jinja2
+gunicorn
+pydantic
+python-dotenv
+sqlalchemy
+
+supervisor
+
+wheel
